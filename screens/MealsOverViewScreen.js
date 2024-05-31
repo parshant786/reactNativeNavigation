@@ -1,6 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React, { useContext, useEffect } from "react";
-import { View, Text, FlatList } from "react-native";
+import { useContext, useLayoutEffect } from "react";
+import { View, FlatList, StyleSheet } from "react-native";
+import { MealCard } from "../components/MealCard";
 import { MealsContext } from "../MealsContext";
 
 export const MealsOverViewScreen = () => {
@@ -9,20 +10,25 @@ export const MealsOverViewScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       title: route.params.title,
     });
   }, []);
-  console.log(selectedCatergory);
+
   return (
-    <View>
+    <View style={styles.listContainer}>
       <FlatList
         data={selectedCatergory}
-        renderItem={({ item }) => {
-          return <Text>{item.title}</Text>;
+        renderItem={(itemData) => {
+          return <MealCard itemData={itemData} />;
         }}
       />
     </View>
   );
 };
+const styles = StyleSheet.create({
+  listContainer: {
+    paddingVertical: 10,
+  },
+});

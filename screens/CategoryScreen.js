@@ -5,17 +5,11 @@ import { CATEGORIES } from "../data/dummy-data";
 import { MealsContext } from "../MealsContext";
 
 export const CategoryScreen = ({ navigation }) => {
-  const { selectedCatergory,setSelectedCatagory } = useContext(MealsContext);
-
+  const { selectedCatergory, setSelectedCatagory } = useContext(MealsContext);
 
   const renderItemFunction = ({ item }) => {
     return (
-      <GridCategoryItem
-        color={item.color}
-        title={item.title}
-        id={item.id}
-        // onPress={handleCatagoryScreen}
-      />
+      <GridCategoryItem color={item.color} title={item.title} id={item.id} />
     );
   };
   return (

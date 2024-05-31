@@ -12,7 +12,7 @@ export const GridCategoryItem = ({ title, color, id }) => {
       MEALS.filter((meal) => meal.categoryIds.includes(id))
     );
     navigate.navigate("Meal Overview Screen",{
-      title:title+" Overview Screen"
+      title:title+" Meals Overview"
     });
   };
 
