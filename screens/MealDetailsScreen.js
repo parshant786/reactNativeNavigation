@@ -1,12 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useLayoutEffect } from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import { SubDetailSection } from "../components/SubDetailSection";
 import { MealsContext } from "../MealsContext";
-
+import { Ionicons } from "@expo/vector-icons";
 export const MealDetailsScreen = () => {
   const navigation = useNavigation();
-  const { selectedMeal } = useContext(MealsContext);
+  const { selectedMeal, favoriteMeals, setFavoriteMeals } = useContext(MealsContext);
 
   const {
     title,
@@ -16,13 +23,28 @@ export const MealDetailsScreen = () => {
     complexity,
     ingredients,
     steps,
+    id,
   } = selectedMeal || {};
-
+  const handlePress = () => {
+     console.log( "hi",id,favoriteMeals)
+    favoriteMeals.includes(id)
+      ? setFavoriteMeals((pre) => pre.filter((currentId) => id !== currentId))
+      : setFavoriteMeals((pre) => [...pre, id]);
+  };
   useLayoutEffect(() => {
     navigation.setOptions({
       title: title,
+      headerRight: () => (
+        <Pressable android_ripple={{ color: "#fff" }} onPress={handlePress}>
+          <Ionicons
+            name="star"
+            size={24}
+            color={favoriteMeals.includes(id) ? "gold" : "black"}
+          />
+        </Pressable>
+      ),
     });
-  }, []);
+  }, [favoriteMeals]);
 
   return (
     <ScrollView style={styles.scrollContainer}>
@@ -64,7 +86,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 24,
     fontWeight: "bold",
-    color:"#f4f4f4",
+    color: "#f4f4f4",
   },
   detailsContainer: {
     flexDirection: "row",
@@ -72,6 +94,6 @@ const styles = StyleSheet.create({
   },
   detailItem: {
     paddingHorizontal: 10,
-   fontWeight: "bold",
+    fontWeight: "bold",
   },
 });

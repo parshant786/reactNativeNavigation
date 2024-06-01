@@ -3,15 +3,20 @@ import React, { useContext } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { MealsContext } from "../MealsContext";
 
-export const MealCard = ({ itemData }) => {
+export const MealCard = ({ itemData,page="" }) => {
   const { setSelectedMeal } = useContext(MealsContext);
   const navigation = useNavigation();
   let { item } = itemData;
   let { title, imageUrl, duration, complexity, affordability, id } = item;
 
   const handlePress = () => {
-    setSelectedMeal(item);
-    navigation.navigate("detailsScreen");
+    if(page == "favroite"){
+
+    }else{
+      setSelectedMeal(item);
+      navigation.navigate("detailsScreen");
+    }
+    
   };
 
   return (
